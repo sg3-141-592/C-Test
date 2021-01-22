@@ -13,12 +13,31 @@ using namespace std;
 
 #define TRACE(msg)            wcout << msg
 
+void display_json(json::value const & jvalue)
+{
+    wcout << (jvalue.serialize()).c_str() << endl;
+}
+
 void handle_get(http_request request)
 {
     TRACE("Processing request\n");
     const uri& address = request.request_uri();
     string path = utility::conversions::to_utf8string(address.path());
-    wcout << path.c_str() << endl;
+    TRACE(path.c_str() << endl);
+    //
+    auto myObj = json::value::object();
+    myObj["one"] = json::value::string("HELLO");
+    myObj["two"] = json::value::string("WORLD");
+
+    auto array = json::value::array();
+    array[0] = json::value::string("A");
+    array[1] = json::value::string("B");
+    array[2] = json::value::string("C");
+
+    myObj["Array"] = array;
+
+    display_json(myObj);
+    //
     request.reply(status_codes::OK, "Hello World\n");
 }
 

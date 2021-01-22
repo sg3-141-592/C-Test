@@ -1,0 +1,1 @@
+clang++ -lpthread -lboost_thread -lboost_system -lcrypto -lssl -lcpprest server.cpp
